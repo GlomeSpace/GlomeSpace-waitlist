@@ -1,0 +1,9 @@
+HELP.md
+frontend/build/
+frontend/node/
+frontend/node_modules/
+frontend/dist/
+.env
+
+### VS Code ###
+.vscode/
