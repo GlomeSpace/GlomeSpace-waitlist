@@ -43,7 +43,6 @@ const InvestorForm=()=>{
             />
              </div>
             <div className="flex items-center gap-3 w-full">
-
              
             <label className="text-[15px]">Email</label>
             <input
@@ -56,8 +55,6 @@ const InvestorForm=()=>{
 
           <div className="flex items-center gap-3 w-full">
 
-            
-            
             <textarea
               type="text"  
               className="p-2 min-h-30 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full  resize-none overflow-hidden"

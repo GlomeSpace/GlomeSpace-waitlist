@@ -2,11 +2,33 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 
 const Home=()=>{
+  const endpoint ='';
     const formValues = useRef();
+
     const handleCheckboxChange = (event) => {
       setIsChecked(event.target.checked);
     };
 
+    const postFormData = async()=>{
+      try {
+        const response = await fetch(endpoint, {
+
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formValues)
+        })
+
+        if(!response.ok){
+          const errorBody = await response.json();
+          console.log(`Failed to post form data: ${errorBody.status}- ${errorBody.message}`);
+          throw new Error(errorBody)
+        }
+        console.log(await response.json())
+      } catch (error) {
+        console.log(error)
+      }  
+    }
 
     return(
         <div className="relative flex flex-col items-center justify-center bg-slate-100 h-screen w-full">
@@ -45,12 +67,11 @@ const Home=()=>{
               <input
                 type="checkbox"
                 id="newslettter"
-                className=""
+                className="scale-140"
                 onChange={handleCheckboxChange}
               />
               <label htmlFor="terms" className="text-[12px] md:text-[15px]">Subscribe me for the Newsletter</label>
             </div>
-
 
             <div className="flex justify-center   px-2 text-white rounded-xl ">
               <button type="submit" className="bg-blue-900 p-2 rounded-sm">
@@ -72,7 +93,6 @@ const Home=()=>{
         </div>
         <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
           <Link to="/become-an-investor" className="hover:underline">Become an Angel Investor</Link>
-
         </div>
       </div>
     </div>
