@@ -6,14 +6,18 @@ const emailSchema = new mongoose.Schema(
     email: {
       type: String,
       required: false,
-      verified: {
-        type: Boolean,
-        default: false,
-      },
-      verificationCode: {
-        type: String,
-        default: uuidv4(),
-      },
+    },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: {
+      type: String,
+      default: uuidv4(),
+    },
+    unsubscribed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

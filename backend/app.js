@@ -37,7 +37,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 import rootRouter from "./routes/root.js";
 import waitlistRoutes from "./routes/waitlistRoutes.js";
 app.use("/", rootRouter);
-app.use("/waitlist", waitlistRoutes);
+app.use("/mail-list", waitlistRoutes);
 
 app.all("*", (req, res) => {
   res.status(404);
