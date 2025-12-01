@@ -19,6 +19,19 @@ const emailSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    newsletter: {
+      type: Boolean,
+      default: false,
+    },
+    // investor specific
+    username: {
+      type: String,
+      required: false,
+    },
+    message: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );
