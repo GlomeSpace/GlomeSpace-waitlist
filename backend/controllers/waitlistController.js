@@ -59,7 +59,10 @@ const addEmail = async (req, res) => {
     dkim: {
       domainName: "glomespace.com",
       keySelector: "default",
-      privateKey: fs.readFileSync("./privateKeyDKIM.pem", "utf8"),
+      privateKey: fs.readFileSync(
+        path.join(__dirname, "..", "privateKeyDKIM.pem"),
+        "utf8"
+      ),
     },
     auth: {
       user: process.env.EMAIL,
