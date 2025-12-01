@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1920">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3e62ba;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #51a2ff;
+      }
+
+      .cls-3 {
+        fill: #161919;
+        filter: url(#drop-shadow-1);
+      }
+
+      .cls-3, .cls-4 {
+        opacity: .64;
+      }
+
+      .cls-4 {
+        fill: #3f4242;
+        filter: url(#drop-shadow-2);
+      }
+    </style>
+    <filter id="drop-shadow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="5"/>
+      <feGaussianBlur result="blur" stdDeviation="3"/>
+      <feFlood flood-color="#000" flood-opacity=".82"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="-2" dy="2"/>
+      <feGaussianBlur result="blur-2" stdDeviation="3"/>
+      <feFlood flood-color="#000" flood-opacity=".79"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g>
+    <path class="cls-1" d="M960,225.39l-636.2,367.31v734.61l636.2,367.31,636.2-367.31v-734.61L960,225.39ZM1433.92,1233.62l-473.92,273.62-473.92-273.62v-547.23l473.92-273.62,473.92,273.62v547.23Z"/>
+    <path class="cls-3" d="M1433.92,686.38s137.4,100.02,162.28-93.69l-162.28,93.69Z"/>
+    <path class="cls-1" d="M1433.92,686.38s140.52,76.66,162.28-93.69l-162.28,93.69Z"/>
+    <path class="cls-1" d="M1418.59,677.49l144.65-103.72,32.96,18.93s-144.86,98.76-162.28,93.69l-15.33-8.89Z"/>
+  </g>
+  <g>
+    <path class="cls-2" d="M960,18L144.2,488.99v942.02l815.8,470.99,815.8-470.99V488.99L960,18ZM1666.51,1367.9l-706.51,407.9-706.51-407.9v-815.8L960,144.2l706.51,407.9v815.8Z"/>
+    <path class="cls-4" d="M1775.8,489c-26.56,102.82-109.3,63.1-109.3,63.1l109.3-63.1Z"/>
+    <polygon class="cls-2" points="1775.8 488.98 1775.8 489 1666.5 552.1 960 144.2 253.5 552.1 253.5 1367.9 254.17 1368.29 144.87 1431.39 144.2 1431.02 144.2 488.98 960 18 1775.8 488.98"/>
+    <path class="cls-2" d="M1775.8,489c-23.74,81.27-109.3,63.1-109.3,63.1l109.3-63.1Z"/>
+  </g>
+</svg>
