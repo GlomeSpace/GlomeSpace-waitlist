@@ -3,6 +3,9 @@ import { useRef } from "react";
 
 const Home=()=>{
     const formValues = useRef();
+    const handleCheckboxChange = (event) => {
+      setIsChecked(event.target.checked);
+    };
 
 
     return(
@@ -26,9 +29,9 @@ const Home=()=>{
           </p>
         </div>
 
-        <form ref={formValues} onSubmit={sendThankYouEmail} className="flex flex-col  items-center mt-15 lg:mt-40">
-          <div className="flex flex-col md:flex-row items-center justify-center font-headerFont w-full p-3 gap-3">
-            <label className="text-[20px] md:text-[25px]">Email</label>
+        <form ref={formValues} onSubmit="" className="flex flex-col  items-center mt-10 lg:mt-20">
+          <div className="flex flex-col  items-center justify-center font-headerFont w-full p-3 gap-3">
+            <label className="text-[20px] md:text-[20px]">Email</label>
             <textarea
               type="email"
               required
@@ -38,6 +41,16 @@ const Home=()=>{
               //onChange={(e) => setUserEmail(e.target.value)}
               rows={1}
             />
+             <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="newslettter"
+                className=""
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor="terms" className="text-[12px] md:text-[15px]">Subscribe me for the Newsletter</label>
+            </div>
+
 
             <div className="flex justify-center   px-2 text-white rounded-xl ">
               <button type="submit" className="bg-blue-900 p-2 rounded-sm">
