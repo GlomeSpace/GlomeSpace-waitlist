@@ -9,8 +9,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const logEvents = async (message, logFileName) => {
-  const dateTime = format(new Date(), "yyyyMMdd\tHH:mm:ss");
-  const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
+const dateTime = format(new Date(), "yyyyMMdd\tHH:mm:ss");
+const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
   try {
     if (!fs.existsSync(path.join(__dirname, "..", "logs"))) {
