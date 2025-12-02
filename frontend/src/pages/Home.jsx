@@ -73,7 +73,7 @@ const Home = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center bg-slate-100 h-screen w-full">
+    <div className="relative flex flex-col items-center justify-center bg-slate-100 min-h-screen w-full">
        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} className=" ">
       <AlertDialogContent className=" w-full md:w-5/10 ">
         <AlertDialogHeader>
@@ -93,7 +93,7 @@ const Home = () => {
       </Link>
 
 
-      <div className="w-8/10 h-8/10">
+      <div className="w-8/10 h-max mb-30 ">
         <div className="flex flex-col items-center text-blue-900">
           <h1 className="font-headerFont font-bold text-[33px] text-center md:text-[60px]">
             Ship Smarter, Faster and Cheaper
@@ -102,7 +102,7 @@ const Home = () => {
             Connect Your Package with a Traveler Heading Your Way.
           </h2>
 
-          <p className="font-primaryFont mt-5 text-[15px] md:text-lg  text-black">
+          <p className="font-bodyFont mt-5 text-[15px] md:text-lg  text-black">
             Stop overpaying for international shipping. Join the verified
             peer-to-peer network making global delivery affordable and reliable.
           </p>

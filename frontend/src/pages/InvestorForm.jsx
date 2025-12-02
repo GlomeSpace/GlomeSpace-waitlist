@@ -107,7 +107,7 @@ const InvestorForm = () => {
             Connect Your Package with a Traveler Heading Your Way.
           </h2>
 
-          <p className="font-primaryFont mt-5 text-[15px] md:text-lg  text-black">
+          <p className="font-bodyFont mt-5 text-[15px] md:text-lg  text-black">
             Stop overpaying for international shipping. Join the verified
             peer-to-peer network making global delivery affordable and reliable.
           </p>
