@@ -44,12 +44,12 @@ const addEmail = async (req, res) => {
   if (emailEntry) {
     return res.status(409).json({message: "email already exists. Enter a different email."})
   }
-    emailEntry = await Email.create({
-      email,
-      username: username ? username : null,
-      message: message ? message : null,
-      newsletter: newsletter === true ? newsletter : false,
-    });
+  emailEntry = await Email.create({
+    email,
+    username: username ? username : null,
+    message: message ? message : null,
+    newsletter: newsletter === true ? newsletter : false,
+  });
 
   // sending the first email
   const transporter = nodemailer.createTransport({
