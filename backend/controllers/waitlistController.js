@@ -1,7 +1,12 @@
 import fs from "fs";
+import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import { Email } from "../models/waitlistModel.js";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const VALID_EMAIL = /^[A-z]+[0-9]*@[A-z]+(\.[A-z]+)+$/;
 
@@ -28,14 +33,23 @@ does: adds the email to the database, sends an email notification with a verific
 returns: nothing
 */
 const addEmail = async (req, res) => {
-  const { email } = req.body;
+  const { email, username, message, newsletter } = req.body;
   if (!email.trim()) {
     return res.status(400).json({ message: "An email address is required." });
   }
   if (!VALID_EMAIL.test(email)) {
     return res.status(400).json({ message: "Invalid email address." });
   }
-  // const newEntry = await Email.create({ email });
+  let emailEntry = await Email.find({ email }).lean()?.[0];
+  if (!emailEntry) {
+    emailEntry = await Email.create({
+      email,
+      username: username ? username : null,
+      message: message ? message : null,
+      newsletter: newsletter === true ? newsletter : false,
+    });
+  }
+  console.log(emailEntry);
 
   // sending the first email
   const transporter = nodemailer.createTransport({
@@ -45,56 +59,132 @@ const addEmail = async (req, res) => {
     dkim: {
       domainName: "glomespace.com",
       keySelector: "default",
-      privateKey: fs.readFileSync("./privateKeyDKIM.pem", "utf8"),
+      privateKey: fs.readFileSync(
+        path.join(__dirname, "..", "privateKeyDKIM.pem"),
+        "utf8"
+      ),
     },
     auth: {
-      user: "arihoseth@glomespace.com",
-      pass: "CMglomespace1",
+      user: process.env.EMAIL,
+      pass: process.env.APP_PASSWORD,
     },
   });
+  const unsubscribeUrl = `${process.env.BACKEND_URL}/mail-list/unsubscribe?emailId=${emailEntry._id}`;
   const messageTemplate = `
-  <div>
-    <p>
-      Hi ${email}, Thank you for signing up! We're thrilled to confirm your spot on the official waitlist for GlomeSpace. 
-      You're one of the first people who will get access to GlomeSpace services, the new platform that lets you connect 
-      packages with verified travelers heading to the right location and ship as fast as possible
-    </p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlomeSpace</title>
+  </head>
+  <body>
+    <table
+      style="
+        max-width: 700px;
+        margin-inline: auto;
+        padding: 10px;
+        border: 1px solid gray;
+        border-radius: 10px;
+      "
+      borders
+    >
+      <tbody>
+        <tr>
+          <td>
+            <p>
+              Hi <b style="color: gray">${
+                emailEntry?.username ? emailEntry.username : email
+              }</b>, Thank you for signing up!
+              We're thrilled to confirm your spot on the official waitlist for
+              GlomeSpace. You're one of the first people who will get access to
+              GlomeSpace services, the new platform that lets you connect
+              packages with verified travelers heading to the right location and
+              ship as fast as possible
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 style="color: gray; margin: 1px">
+              Next, we're working hard to prepare for launch. Here's what you
+              can expect:
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td style="margin-right: 5px">
+            <ol>
+              <li>
+                Priority Access: You will be among the first users invited to
+                download and use the app when we go live.
+              </li>
+              <li>
+                Updates: We'll send you occasional emails with exciting product
+                milestones, beta testing opportunities, and the official launch
+                date, unless you subscribed to our newsletter.
+              </li>
+              <li>
+                We value your inbox! We'll only contact you with essential
+                launch news and updates.
+              </li>
+              <li>
+                Get Noticed Sooner! Want to jump the line? Share the waitlist
+                link with friends! We can't wait to help you ship smarter and
+                travel lighter. See you on launch day!
+              </li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>Best Regards,</span><br />
+            <span>Ariho Seth</span><br />
+            <span>Founder & CEO,</span><br />
+            <span>GlomeSpace | GlomeSpace.com</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="${unsubscribeUrl}" style="font-size: 0.8em; color: blue">Unsubscribe</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+  `;
+  const textTemplate = `
+  Hi ${email}, Thank you for signing up! We're thrilled to confirm your spot on the official waitlist for GlomeSpace. 
+  You're one of the first people who will get access to GlomeSpace services, 
+  the new platform that lets you connect packages with verified travelers heading to the right location and ship as fast as possible
+ 
+  Next, we're working hard to prepare for launch. Here's what you can expect:
+  Priority Access: You will be among the first users invited to download and use the app when we go live.
+  Updates: We'll send you occasional emails with exciting product milestones, beta testing opportunities, 
+  and the official launch date, unless you subscribed to our newsletter.
+  We value your inbox! We'll only contact you with essential launch news and updates.
+  Get Noticed Sooner! Want to jump the line? Share the waitlist link with friends! 
+  We can't wait to help you ship smarter and travel lighter. See you on launch day!
   
-    <h4>
-      Next, we’re working hard to prepare for launch. Here’s what you can expect:
-    </h4>
-    <ol>
-      <li>
-        Priority Access: You will be among the first users invited to download and use the app when we go live.
-      </li>
-      <li>
-        Updates: We'll send you occasional emails with exciting product milestones, beta testing opportunities, 
-        and the official launch date, unless you subscribed to our newsletter.
-      </li>
-      <li>
-        We value your inbox! We'll only contact you with essential launch news and updates.
-      </li>
-      <li>
-        Get Noticed Sooner! Want to jump the line? Share the waitlist link with friends! 
-        We can't wait to help you ship smarter and travel lighter. See you on launch day!
-      </li>
-    </ol>
-    
-    <span>Best Regards,</span><br>
-    <span>Ariho Seth</span><br>
-    <span>Founder & CEO,</span><br>
-    <span>GlomeSpace | GlomeSpace.com</span>
-  </div>
+  Best Regards,
+  Ariho Seth
+  Founder & CEO, 
+  GlomeSpace | GlomeSpace.com
   `;
   const info = await transporter.sendMail({
     from: "'Ariho Seth' <arihoseth@glomespace.com>",
     to: email,
     subject: "GlomeSpace",
-    text: "You joined our mailing list",
+    text: textTemplate,
     html: messageTemplate,
+    list: {
+      unsubscribe: {
+        url: unsubscribeUrl,
+        comment: "Unsubscribe from the newsletter.",
+      },
+    },
   });
-  console.log(info);
-
   res.status(201).json({ message: "email added." });
 };
 
@@ -126,14 +216,15 @@ const verifyEmail = async (req, res) => {
 
 /*
 endpoint: unsubscribe
-method: post
+method: get
 receives: email track id
 does: queries the db for the email track Id and sets unsubscribed fiela to true
 returns: nothing
 */
 const unsubscribe = async (req, res) => {
-  const { emailId } = req.body;
-  if (!emailId) {
+  const { emailId } = req.query;
+  console.log(emailId);
+  if (!emailId || emailId == "undefined") {
     return res.status(400).json({ message: "email Id is not provided." });
   }
   if (!mongoose.Types.ObjectId.isValid(emailId)) {
@@ -146,7 +237,8 @@ const unsubscribe = async (req, res) => {
     return res.status(404).json({ messgae: "email not found." });
   }
   email.unsubscribed = true;
-  res.status(200).json({ messgae: "successfully unsubscribed." });
+  await email.save();
+  res.sendFile(path.join(__dirname, "..", "public", "successUnsubscribe.html"));
 };
 
 export default {
