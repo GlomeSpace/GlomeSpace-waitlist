@@ -1,20 +1,30 @@
-"use client"
-import { toast } from "sonner"
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const InvestorForm = () => {
-  const BACKEND_URL = [process.env.BACKEND_URL];
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userData, setUserData] = useState({
-    username: "",
-    email: "",
-    message: "",
-    newsletter: false,
-  });
+  const [messageTitle, setMessageTitle] = useState();
+  const [finalMessage, setFinalMessage] = useState();
+  const INITIAL_STATE = {
+  username: "",
+  email: "",
+  message: "",
+  newsletter: false 
+};
 
+  const [userData, setUserData] = useState(INITIAL_STATE);
 
   const { username, email, message, newsletter } = userData;
 
@@ -26,11 +36,9 @@ const InvestorForm = () => {
 
   const postFormData = async (e) => {
     e.preventDefault();
-    console.log(userData);
     try {
       setIsLoading(true);
-      console.log(userData);
-      const response = await fetch(`${BACKEND_URL}/`, {
+      const response = await fetch(`${BACKEND_URL}/mail-list/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,33 +47,58 @@ const InvestorForm = () => {
       });
 
       if (!response.ok) {
+        setMessageTitle("Submission Failure");
+        setFinalMessage("Failed to add your details");
         const errorData = await response.json();
-         setFinalMessage("Failed to add your details \n please try again!")
-        
         throw new Error(
           errorData.message ||
             `Server responded with status: ${response.status}`
         );
       }
-      const data = await response.json();
-      console.log(data);
-      setFinalMessage("Details added successfully. \n Thank you!")
+      await response.json();
+      setUserData(INITIAL_STATE);
+      setMessageTitle("Submission Complete");
+      setFinalMessage("Details added successfully. \n Thank you!");
     } catch (error) {
+      setMessageTitle("Submission Failure");
+      setFinalMessage("Failed to add your details \n please try again");
       console.log("Error while posting form data:", error);
-      
     } finally {
       setIsLoading(false);
-      toast(finalMessage);
+      setIsDialogOpen(true);
     }
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center bg-slate-100 h-dvh w-full pb-72">
+    <div className="relative flex flex-col items-center justify-center bg-slate-100 min-h-screen w-full">
+      <AlertDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        className=" "
+      >
+        <AlertDialogContent className=" w-full md:w-5/10 ">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-blue-900 ">
+              {messageTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription>{finalMessage}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => setIsDialogOpen(false)}
+              className="bg-blue-900"
+            >
+              Close
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <Link to="/">
         <img src="/photos/glomespace-logo.svg" className="h-10 md:h-15" />
       </Link>
 
-      <div className="w-8/10 h-8/10">
+      <div className="w-8/10 h-max mb-30  ">
         <div className="flex flex-col items-center text-blue-900">
           <h1 className="font-headerFont font-bold text-[33px] text-center md:text-[60px]">
             Ship Smarter, Faster and Cheaper
@@ -82,9 +115,9 @@ const InvestorForm = () => {
 
         <form
           onSubmit={(e) => postFormData(e)}
-          className="flex flex-col  items-center lg:mt-10"
+          className="flex flex-col items-center w-full h-full mt-10 lg:mt-20"
         >
-          <div className="flex flex-col  items-center justify-center font-headerFont w-full md:w-5/10 h-max py-3 md:px-20 gap-3">
+          <div className="flex flex-col  items-center justify-center font-headerFont w-full lg:w-5/10 h-full   py-3 md:px-20 gap-3">
             <div className="flex items-center gap-3 w-full">
               <label className="text-[15px]">Name</label>
               <input
@@ -92,6 +125,7 @@ const InvestorForm = () => {
                 id="username"
                 name="username"
                 value={username}
+                required
                 className="p-2 min-h-10 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full resize-none overflow-hidden"
                 placeholder="John Doe"
                 onChange={(e) => handleOnChange(e)}
@@ -104,6 +138,7 @@ const InvestorForm = () => {
                 id="email"
                 name="email"
                 value={email}
+                required
                 className="p-2 min-h-10 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full resize-none overflow-hidden"
                 placeholder="yourname@gmail.com"
                 onChange={(e) => handleOnChange(e)}
@@ -116,6 +151,7 @@ const InvestorForm = () => {
                 id="message"
                 name="message"
                 value={message}
+                required
                 className="p-2 min-h-30 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full  resize-none overflow-hidden"
                 placeholder="type your message here..."
                 rows={1}
@@ -139,15 +175,14 @@ const InvestorForm = () => {
 
             <div className="  px-2 text-white rounded-xl">
               {isLoading ? (
-                <Button
-                  variant="secondary"
+                <button
                   disabled
                   size="sm"
-                  className="bg-blue-900 "
+                  className="flex gap-2 bg-blue-900 p-2 rounded-sm"
                 >
-                  <Spinner className="size-6 text-white" />
                   Processing
-                </Button>
+                  <Spinner className="size-6 text-white" />
+                </button>
               ) : (
                 <button type="submit" className="bg-blue-900 p-2 rounded-sm">
                   join the waitlist
@@ -156,18 +191,23 @@ const InvestorForm = () => {
             </div>
           </div>
         </form>
-      </div>
 
-      <div className="absolute flex gap-5 px-5  items-center justify-between left-0 bottom-0 h-20 w-full bg-blue-900">
+        
+      </div>
+      <div className="absolute flex gap-5 px-5  items-center justify-between left-0 bottom-0 h-24 w-full bg-blue-900">
         <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
           <p>
             &copy; {new Date().getFullYear()} GlomeSpace, Inc and its affiliates
           </p>
         </div>
         <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
-          <p className="hover:underline">Become an Angel Investor</p>
+          <Link to="/become-an-investor" className="hover:underline">
+            Become an Angel Investor
+          </Link>
         </div>
       </div>
+
+      
     </div>
   );
 };

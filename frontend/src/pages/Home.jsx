@@ -1,22 +1,31 @@
 
-"use client"
-import { toast } from "sonner"
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 const Home = () => {
-  const BACKEND_URL = [process.env.BACKEND_URL];
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [finalMessage, setFinalMessage] = useState("");
+   const [messageTitle, setMessageTitle] = useState();
+  const [finalMessage, setFinalMessage] = useState();
+  const INITIAL_STATE = {
+  username: "",
+  email: "",
+  message: "",
+  newsletter: false 
+};
 
-  const [userData, setUserData] = useState({
-    username: "",
-    email: "",
-    message: "",
-    newsletter: false,
-  });
+  const [userData, setUserData] = useState(INITIAL_STATE);
 
   const handleOnChange = (e) => {
     const value =
@@ -30,8 +39,7 @@ const Home = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      console.log(userData);
-      const response = await fetch(`${BACKEND_URL}/`, {
+      const response = await fetch(`${BACKEND_URL}/mail-list/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +48,9 @@ const Home = () => {
       });
 
       if (!response.ok) {
-        setFinalMessage("Failed to add your details \n please try again!")
+        setMessageTitle("Submission Failure")
+        setFinalMessage("Failed to add your details \n please try again")
+
         const errorData = await response.json();
         throw new Error(
           errorData.message ||
@@ -48,20 +58,40 @@ const Home = () => {
         );
       }
 
-      const data = await response.json();
+      await response.json();
+      setUserData(INITIAL_STATE);
+      setMessageTitle("Submission Complete")
       setFinalMessage("Details added successfully. \n Thank you!")
-      console.log(data);
     } catch (error) {
+       setMessageTitle("Submission Failure")
+        setFinalMessage("Failed to add your details \n please try again")
       console.log("Error while posting form data:", error);
     } finally {
       setIsLoading(false);
-      toast(finalMessage);
+      setIsDialogOpen(true);
     }
   };
 
   return (
     <div className="relative flex flex-col items-center justify-center bg-slate-100 h-screen w-full">
-      <img src="/photos/glomespace-logo.svg" className="h-10 md:h-15" />
+       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} className=" ">
+      <AlertDialogContent className=" w-full md:w-5/10 ">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-blue-900 ">{messageTitle}</AlertDialogTitle>
+          <AlertDialogDescription>
+            {finalMessage}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction onClick={() => setIsDialogOpen(false)} className="bg-blue-900">Close</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+
+      <Link to="/">
+        <img src="/photos/glomespace-logo.svg" className="h-10 md:h-15" />
+      </Link>
+
 
       <div className="w-8/10 h-8/10">
         <div className="flex flex-col items-center text-blue-900">
@@ -80,7 +110,7 @@ const Home = () => {
 
         <form
           onSubmit={(e) => postFormData(e)}
-          className="flex flex-col  items-center mt-10 lg:mt-20"
+          className="flex flex-col items-center  mt-10 lg:mt-20"
         >
           <div className="flex flex-col  items-center justify-center font-headerFont w-full p-3 gap-3">
             <label className="text-[20px] md:text-[20px]">Email</label>
@@ -111,10 +141,10 @@ const Home = () => {
 
             <div className="flex justify-center   px-2 text-white rounded-xl ">
               {isLoading ? (
-                <Button variant="secondary" disabled size="sm" className="bg-blue-900 ">
-                  <Spinner className="size-6 text-white" />
+                <button  disabled size="sm" className="flex gap-2 bg-blue-900 p-2 rounded-sm">
                   Processing
-                </Button>
+                  <Spinner className="size-6 text-white" />
+                </button>
               ) : (
                 <button type="submit" className="bg-blue-900 p-2 rounded-sm">
                   join the waitlist
