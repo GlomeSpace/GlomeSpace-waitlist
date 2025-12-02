@@ -47,13 +47,13 @@ const InvestorForm = () => {
       });
 
       if (!response.ok) {
-        setMessageTitle("Submission Failure");
-        setFinalMessage("Failed to add your details");
         const errorData = await response.json();
-        throw new Error(
-          errorData.message ||
-            `Server responded with status: ${response.status}`
-        );
+          setMessageTitle("Submission Failure");
+          setFinalMessage("Failed to add your details");
+         //throw new Error(
+         // errorData.message ||
+         //   `Server responded with status: ${response.status}`
+         //);
       }
       await response.json();
       setUserData(INITIAL_STATE);
@@ -62,7 +62,7 @@ const InvestorForm = () => {
     } catch (error) {
       setMessageTitle("Submission Failure");
       setFinalMessage("Failed to add your details \n please try again");
-      console.log("Error while posting form data:", error);
+      //console.log("Error while posting form data:", error);
     } finally {
       setIsLoading(false);
       setIsDialogOpen(true);

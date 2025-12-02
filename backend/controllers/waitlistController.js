@@ -40,16 +40,16 @@ const addEmail = async (req, res) => {
   if (!VALID_EMAIL.test(email)) {
     return res.status(400).json({ message: "Invalid email address." });
   }
-  let emailEntry = await Email.find({ email }).lean()?.[0];
-  if (!emailEntry) {
+  let emailEntry = await Email.findOne({ email }).lean();
+  if (emailEntry) {
+    return res.status(409).json({message: "email already exists. Enter a different email."})
+  }
     emailEntry = await Email.create({
       email,
       username: username ? username : null,
       message: message ? message : null,
       newsletter: newsletter === true ? newsletter : false,
     });
-  }
-  console.log(emailEntry);
 
   // sending the first email
   const transporter = nodemailer.createTransport({
@@ -223,7 +223,6 @@ returns: nothing
 */
 const unsubscribe = async (req, res) => {
   const { emailId } = req.query;
-  console.log(emailId);
   if (!emailId || emailId == "undefined") {
     return res.status(400).json({ message: "email Id is not provided." });
   }
