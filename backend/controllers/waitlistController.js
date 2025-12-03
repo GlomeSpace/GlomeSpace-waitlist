@@ -42,7 +42,9 @@ const addEmail = async (req, res) => {
   }
   let emailEntry = await Email.findOne({ email }).lean();
   if (emailEntry) {
-    return res.status(409).json({message: "email already exists. Enter a different email."})
+    return res
+      .status(409)
+      .json({ message: "email already exists. Enter a different email." });
   }
   emailEntry = await Email.create({
     email,

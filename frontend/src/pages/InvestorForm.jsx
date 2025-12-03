@@ -18,11 +18,11 @@ const InvestorForm = () => {
   const [messageTitle, setMessageTitle] = useState();
   const [finalMessage, setFinalMessage] = useState();
   const INITIAL_STATE = {
-  username: "",
-  email: "",
-  message: "",
-  newsletter: false 
-};
+    username: "",
+    email: "",
+    message: "",
+    newsletter: false,
+  };
 
   const [userData, setUserData] = useState(INITIAL_STATE);
 
@@ -48,12 +48,12 @@ const InvestorForm = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-          setMessageTitle("Submission Failure");
-          setFinalMessage("Failed to add your details");
-         //throw new Error(
-         // errorData.message ||
-         //   `Server responded with status: ${response.status}`
-         //);
+        setMessageTitle("Submission Failure");
+        setFinalMessage("Failed to add your details");
+        //throw new Error(
+        // errorData.message ||
+        //   `Server responded with status: ${response.status}`
+        //);
       }
       await response.json();
       setUserData(INITIAL_STATE);
@@ -191,8 +191,6 @@ const InvestorForm = () => {
             </div>
           </div>
         </form>
-
-        
       </div>
       <div className="absolute flex gap-5 px-5  items-center justify-between left-0 bottom-0 h-24 w-full bg-blue-900">
         <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
@@ -206,8 +204,6 @@ const InvestorForm = () => {
           </Link>
         </div>
       </div>
-
-      
     </div>
   );
 };
