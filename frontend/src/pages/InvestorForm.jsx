@@ -151,7 +151,6 @@ const InvestorForm = () => {
                 id="message"
                 name="message"
                 value={message}
-                required
                 className="p-2 min-h-30 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full  resize-none overflow-hidden"
                 placeholder="type your message here..."
                 rows={1}
