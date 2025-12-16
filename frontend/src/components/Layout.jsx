@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { Outlet } from 'react-router-dom';
 
-function Layout() {
+export function Layout() {
   return (
     <>
          <Outlet />
@@ -10,5 +10,4 @@ function Layout() {
   );
 }
 
-export default Layout;
 
