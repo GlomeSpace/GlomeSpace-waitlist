@@ -95,7 +95,7 @@ const InvestorForm = () => {
       </AlertDialog>
 
       <Link to="/">
-        <img src="/photos/glomespaceB.svg"  width={300} />
+        <img src="/photos/glomespaceB.svg" width={300} />
       </Link>
 
       <div className="w-8/10 h-max mb-30  ">
@@ -104,11 +104,13 @@ const InvestorForm = () => {
             Ship Smarter, Faster and Cheaper
           </h1>
           <h2 className="font-headerFont font-semi-bold md:text-[30px]">
-             Welcome to the Angel Investors' page
+            Welcome to the Angel Investors' page
           </h2>
 
           <p className="font-bodyFont mt-5 text-[15px] md:text-lg  text-black">
-            We've announced out pre-seed funding round, which starts on 5th of January 2026, Please submit your email and we'll be ready to get back to you with the details of our fund raising.
+            We've announced out pre-seed funding round, which starts on 5th of
+            January 2026, Please submit your email and we'll be ready to get
+            back to you with the details of our fund raising.
           </p>
         </div>
 
@@ -144,19 +146,7 @@ const InvestorForm = () => {
               />
             </div>
 
-            <div className="flex items-center gap-3 w-full">
-              <textarea
-                hidden
-                type="text"
-                id="message"
-                name="message"
-                value={message}
-                className="p-2 min-h-30 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full  resize-none overflow-hidden"
-                placeholder="type your message here..."
-                rows={1}
-                onChange={(e) => handleOnChange(e)}
-              />
-            </div>
+            
 
             <div className="flex items-center space-x-2">
               <input

@@ -3,7 +3,7 @@ import "./App.css";
 import InvestorForm from "./pages/InvestorForm";
 import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
-import {Layout} from "./components/Layout.jsx"
+import { Layout } from "./components/Layout.jsx"
 
 function App() {
   return (

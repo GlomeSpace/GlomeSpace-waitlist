@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
@@ -10,20 +9,20 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 
 const Home = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-   const [messageTitle, setMessageTitle] = useState();
+  const [messageTitle, setMessageTitle] = useState();
   const [finalMessage, setFinalMessage] = useState();
   const INITIAL_STATE = {
-  username: "",
-  email: "",
-  message: "",
-  newsletter: false 
-};
+    username: "",
+    email: "",
+    message: "",
+    newsletter: false,
+  };
 
   const [userData, setUserData] = useState(INITIAL_STATE);
 
@@ -48,8 +47,8 @@ const Home = () => {
       });
 
       if (!response.ok) {
-        setMessageTitle("Submission Failure")
-        setFinalMessage("Failed to add your details \n please try again")
+        setMessageTitle("Submission Failure");
+        setFinalMessage("Failed to add your details \n please try again");
 
         const errorData = await response.json();
         throw new Error(
@@ -60,11 +59,11 @@ const Home = () => {
 
       await response.json();
       setUserData(INITIAL_STATE);
-      setMessageTitle("Submission Complete")
-      setFinalMessage("Details added successfully. \n Thank you!")
+      setMessageTitle("Submission Complete");
+      setFinalMessage("Details added successfully. \n Thank you!");
     } catch (error) {
-       setMessageTitle("Submission Failure")
-        setFinalMessage("Failed to add your details \n please try again")
+      setMessageTitle("Submission Failure");
+      setFinalMessage("Failed to add your details \n please try again");
       console.log("Error while posting form data:", error);
     } finally {
       setIsLoading(false);
@@ -74,24 +73,32 @@ const Home = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center bg-slate-100 min-h-screen w-full">
-       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} className=" ">
-      <AlertDialogContent className=" w-full md:w-5/10 ">
-        <AlertDialogHeader>
-          <AlertDialogTitle className="text-blue-900 ">{messageTitle}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {finalMessage}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogAction onClick={() => setIsDialogOpen(false)} className="bg-blue-900">Close</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      <AlertDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        className=" "
+      >
+        <AlertDialogContent className=" w-full md:w-5/10 ">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-blue-900 ">
+              {messageTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription>{finalMessage}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => setIsDialogOpen(false)}
+              className="bg-blue-900"
+            >
+              Close
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Link to="/">
         <img src="/photos/glomespaceB.svg" width={300} />
       </Link>
-
 
       <div className="w-8/10 h-max mb-30 ">
         <div className="flex flex-col items-center text-blue-900">
@@ -141,7 +148,11 @@ const Home = () => {
 
             <div className="flex justify-center   px-2 text-white rounded-xl ">
               {isLoading ? (
-                <button  disabled size="sm" className="flex gap-2 bg-blue-900 p-2 rounded-sm">
+                <button
+                  disabled
+                  size="sm"
+                  className="flex gap-2 bg-blue-900 p-2 rounded-sm"
+                >
                   Processing
                   <Spinner className="size-6 text-white" />
                 </button>
