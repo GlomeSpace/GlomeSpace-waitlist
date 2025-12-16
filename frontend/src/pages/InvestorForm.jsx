@@ -144,8 +144,9 @@ const InvestorForm = () => {
               />
             </div>
 
-            {/** <div className="flex items-center gap-3 w-full">
+            <div className="flex items-center gap-3 w-full">
               <textarea
+                hidden
                 type="text"
                 id="message"
                 name="message"
@@ -156,7 +157,7 @@ const InvestorForm = () => {
                 rows={1}
                 onChange={(e) => handleOnChange(e)}
               />
-            </div> */}
+            </div>
 
             <div className="flex items-center space-x-2">
               <input
