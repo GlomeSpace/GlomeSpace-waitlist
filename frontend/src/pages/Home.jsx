@@ -89,7 +89,7 @@ const Home = () => {
     </AlertDialog>
 
       <Link to="/">
-        <img src="/photos/glomespace-logo.svg" className="h-10 md:h-15" />
+        <img src="/photos/glomespaceB.svg" width={300} />
       </Link>
 
 

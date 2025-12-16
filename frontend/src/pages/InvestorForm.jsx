@@ -95,7 +95,7 @@ const InvestorForm = () => {
       </AlertDialog>
 
       <Link to="/">
-        <img src="/photos/glomespace-logo.svg" className="h-10 md:h-15" />
+        <img src="/photos/glomespaceB.svg"  width={300} />
       </Link>
 
       <div className="w-8/10 h-max mb-30  ">
@@ -104,12 +104,11 @@ const InvestorForm = () => {
             Ship Smarter, Faster and Cheaper
           </h1>
           <h2 className="font-headerFont font-semi-bold md:text-[30px]">
-            Connect Your Package with a Traveler Heading Your Way.
+             Welcome to the Angel Investor page
           </h2>
 
           <p className="font-bodyFont mt-5 text-[15px] md:text-lg  text-black">
-            Stop overpaying for international shipping. Join the verified
-            peer-to-peer network making global delivery affordable and reliable.
+            We've announced out pre-seed funding round, which starts on 5th of January 2026, Please submit your email and we'll be ready to get back to you with the details of our fund raising.
           </p>
         </div>
 
@@ -145,7 +144,7 @@ const InvestorForm = () => {
               />
             </div>
 
-            <div className="flex items-center gap-3 w-full">
+            {/** <div className="flex items-center gap-3 w-full">
               <textarea
                 type="text"
                 id="message"
@@ -157,7 +156,7 @@ const InvestorForm = () => {
                 rows={1}
                 onChange={(e) => handleOnChange(e)}
               />
-            </div>
+            </div> */}
 
             <div className="flex items-center space-x-2">
               <input
@@ -185,7 +184,7 @@ const InvestorForm = () => {
                 </button>
               ) : (
                 <button type="submit" className="bg-blue-900 p-2 rounded-sm">
-                  join the waitlist
+                  Submit
                 </button>
               )}
             </div>
@@ -199,8 +198,8 @@ const InvestorForm = () => {
           </p>
         </div>
         <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
-          <Link to="/become-an-investor" className="hover:underline">
-            Become an Angel Investor
+          <Link to="/" className="hover:underline">
+            Home Page
           </Link>
         </div>
       </div>
