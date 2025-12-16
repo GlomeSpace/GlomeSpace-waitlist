@@ -104,7 +104,7 @@ const InvestorForm = () => {
             Ship Smarter, Faster and Cheaper
           </h1>
           <h2 className="font-headerFont font-semi-bold md:text-[30px]">
-             Welcome to the Angel Investor page
+             Welcome to the Angel Investors' page
           </h2>
 
           <p className="font-bodyFont mt-5 text-[15px] md:text-lg  text-black">
