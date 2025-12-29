@@ -288,7 +288,6 @@ const InvestorForm = () => {
           </div>
           <p className="text-gray-600 mb-4">Ship faster, smarter and cheaper</p>
           <p className="text-gray-500 text-sm">
-            {" "}
             &copy; {new Date().getFullYear()} GlomeSpace, Inc and its affiliates
           </p>
         </div>
