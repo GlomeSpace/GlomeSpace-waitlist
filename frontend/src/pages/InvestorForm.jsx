@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Spinner } from "@/components/ui/spinner";
+import { FaLinkedin } from "react-icons/fa6";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,9 +11,20 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Send,
+  Package,
+  Clock,
+  DollarSign,
+  Users,
+  CheckCircle,
+  Menu,
+  X,
+} from "lucide-react";
 
 const InvestorForm = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messageTitle, setMessageTitle] = useState();
@@ -70,7 +82,7 @@ const InvestorForm = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center bg-slate-100 min-h-screen w-full">
+    <>
       <AlertDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
@@ -94,61 +106,136 @@ const InvestorForm = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <Link to="/">
-        <img src="/photos/glomespaceB.svg" width={300} />
-      </Link>
+      {/* Navigation */}
+      <nav className="bg-white/80 backdrop-blur-md shadow-sm fixed w-full z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-2">
+              <Link to="/">
+                <img src="/photos/glomespaceB.svg" width={200} />
+              </Link>
+            </div>
 
-      <div className="w-8/10 h-max mb-30  ">
-        <div className="flex flex-col items-center text-blue-900">
-          <h1 className="font-headerFont font-bold text-[33px] text-center md:text-[60px]">
-            Ship Smarter, Faster and Cheaper
-          </h1>
-          <h2 className="font-headerFont font-semi-bold md:text-[30px]">
-            Welcome to the Angel Investors' page
-          </h2>
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a
+                href="/#features"
+                className="text-gray-700 hover:text-blue-900 transition"
+              >
+                Features
+              </a>
+              <a
+                href="/#how-it-works"
+                className="text-gray-700 hover:text-blue-900 transition"
+              >
+                How It Works
+              </a>
+              <Link to="/become-an-investor" className="hover:underline">
+                Become an Angel Investor
+              </Link>
 
-          <p className="font-bodyFont mt-5 text-[15px] md:text-lg  text-black">
-            We've announced out pre-seed funding round, which starts on 5th of
-            January 2026, Please submit your email and we'll be ready to get
-            back to you with the details of our fund raising.
-          </p>
+              <a
+                href="/#waitlist"
+                className="bg-blue-900 text-white px-6 py-2 rounded-full hover:bg-blue-800 transition"
+              >
+                Join Waitlist
+              </a>
+
+              <Link to={"https://www.linkedin.com/company/glomespace/"}>
+                <FaLinkedin size={30} className="text-blue-900" />
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-blue-900"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
 
-        <form
-          onSubmit={(e) => postFormData(e)}
-          className="flex flex-col items-center w-full h-full mt-10 lg:mt-20"
-        >
-          <div className="flex flex-col  items-center justify-center font-headerFont w-full lg:w-5/10 h-full   py-3 md:px-20 gap-3">
-            <div className="flex items-center gap-3 w-full">
-              <label className="text-[15px]">Name</label>
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t">
+            <div className="px-4 py-4 space-y-3">
+              <a
+                href="#features"
+                className="block text-gray-700 hover:text-blue-900"
+              >
+                Features
+              </a>
+              <a
+                href="#how-it-works"
+                className="block text-gray-700 hover:text-blue-900"
+              >
+                How It Works
+              </a>
+              <Link to="/become-an-investor" className="hover:underline">
+                Become an Angel Investor
+              </Link>
+
+              <a
+                href="#waitlist"
+                className="block bg-blue-900 text-white px-6 py-2 rounded-full text-center"
+              >
+                Join Waitlist
+              </a>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Waitlist Section */}
+      <section
+        id="waitlist"
+        className="py-50 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-900 to-slate-100"
+      >
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+            Become An Angel Investor
+          </h2>
+          <p className="text-blue-100 text-lg mb-12">
+            We've announced out pre-seed round of funding, which starts on 15th
+            of January 2026, Please submit your email and we'll be ready to get
+            back to you with the details of our fundraising.
+          </p>
+
+          <form
+            onSubmit={(e) => postFormData(e)}
+            className="bg-white rounded-2xl p-6 sm:p-8 shadow-2xl"
+          >
+            <div className="mb-6">
               <input
                 type="text"
                 id="username"
                 name="username"
                 value={username}
                 required
-                className="p-2 min-h-10 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full resize-none overflow-hidden"
+                className="w-full px-6 py-4 rounded-full border-2 border-slate-100 focus:border-blue-900 focus:outline-none text-lg"
                 placeholder="John Doe"
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
-            <div className="flex items-center gap-3 w-full">
-              <label className="text-[15px]">Email</label>
+
+            <div className="mb-6">
               <input
                 type="email"
-                id="email"
                 name="email"
                 value={email}
                 required
-                className="p-2 min-h-10 bg-white box-border border-gray-300 border-3 text-sm rounded-xl w-full resize-none overflow-hidden"
+                className="w-full px-6 py-4 rounded-full border-2 border-slate-100 focus:border-blue-900 focus:outline-none text-lg"
                 placeholder="yourname@gmail.com"
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
 
-            
-
-            <div className="flex items-center space-x-2">
+            <div className="mb-6 flex items-center justify-center space-x-3">
               <input
                 type="checkbox"
                 id="newsletter"
@@ -157,43 +244,56 @@ const InvestorForm = () => {
                 className="scale-140"
                 onChange={handleOnChange}
               />
-              <label htmlFor="terms" className="text-[12px] md:text-[15px]">
-                Subscribe me for the Newsletter
+
+              <label
+                htmlFor="newsletter"
+                className="text-gray-700 cursor-pointer"
+              >
+                Sign up for our newsletter
               </label>
             </div>
 
-            <div className="  px-2 text-white rounded-xl">
-              {isLoading ? (
-                <button
-                  disabled
-                  size="sm"
-                  className="flex gap-2 bg-blue-900 p-2 rounded-sm"
-                >
-                  Processing
-                  <Spinner className="size-6 text-white" />
-                </button>
-              ) : (
-                <button type="submit" className="bg-blue-900 p-2 rounded-sm">
-                  Submit
-                </button>
-              )}
-            </div>
+            {isLoading ? (
+              <button
+                disabled
+                size="sm"
+                className="flex justify-center gap-2 w-full bg-blue-900 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-900 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Processing
+                <Spinner className="size-6 text-white" />
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full bg-blue-900 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Submit
+              </button>
+            )}
+
+            <p className="text-gray-500 text-sm mt-4">
+              We'll contact you right away for a conversation
+            </p>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="flex items-center justify-center space-x-2">
+            <Link to="/">
+              <img src="/photos/glomespaceB.svg" width={200} />
+            </Link>
           </div>
-        </form>
-      </div>
-      <div className="absolute flex gap-5 px-5  items-center justify-between left-0 bottom-0 h-24 w-full bg-blue-900">
-        <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
-          <p>
+          <p className="text-gray-600 mb-4">Ship faster, smarter and cheaper</p>
+          <p className="text-gray-500 text-sm">
+            {" "}
             &copy; {new Date().getFullYear()} GlomeSpace, Inc and its affiliates
           </p>
         </div>
-        <div className="font-headerFont text-white text-[10px]  md:text-[12px]">
-          <Link to="/" className="hover:underline">
-            Home Page
-          </Link>
-        </div>
-      </div>
-    </div>
+      </footer>
+    </>
   );
 };
 
