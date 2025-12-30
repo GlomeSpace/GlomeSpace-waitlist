@@ -181,12 +181,9 @@ const Home = () => {
               >
                 How It Works
               </a>
-              <a
-                href="/become-an-investor"
-                className="block text-gray-700 hover:text-blue-900"
-              >
+               <Link to="/become-an-investor" className="hover:underline">
                 Become an Angel Investor
-              </a>
+              </Link>
               <a
                 href="#waitlist"
                 className="block bg-blue-900 text-white px-6 py-2 rounded-full text-center"
