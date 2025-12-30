@@ -22,6 +22,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -134,9 +135,9 @@ const Home = () => {
               >
                 How It Works
               </a>
-              <a href="/become-an-investor" className="hover:underline">
+              <Link to="/become-an-investor" className="hover:underline">
                 Become an Angel Investor
-              </a>
+              </Link>
 
               <a
                 href="#waitlist"
