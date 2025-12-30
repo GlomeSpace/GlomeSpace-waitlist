@@ -131,9 +131,9 @@ const InvestorForm = () => {
               >
                 How It Works
              </a>
-              <a href="/become-an-investor" className="hover:underline">
+               <Link to="/become-an-investor" className="hover:underline">
                 Become an Angel Investor
-             </a>
+              </Link>
 
               <a 
                 href="/#waitlist"
@@ -166,23 +166,23 @@ const InvestorForm = () => {
           <div className="md:hidden bg-white border-t">
             <div className="px-4 py-4 space-y-3">
               <a 
-                href="#features"
+                href="/#features"
                 className="block text-gray-700 hover:text-blue-900"
               >
                 Features
              </a>
               <a 
-                href="#how-it-works"
+                href="/#how-it-works"
                 className="block text-gray-700 hover:text-blue-900"
               >
                 How It Works
              </a>
-              <a href="/become-an-investor" className="hover:underline">
+               <Link to="/become-an-investor" className="hover:underline">
                 Become an Angel Investor
-             </a>
+              </Link>
 
               <a 
-                href="#waitlist"
+                href="/#waitlist"
                 className="block bg-blue-900 text-white px-6 py-2 rounded-full text-center"
               >
                 Join Waitlist
