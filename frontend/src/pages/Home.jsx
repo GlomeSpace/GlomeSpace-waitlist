@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { FaLinkedin } from "react-icons/fa6";
@@ -22,6 +22,8 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import CalendlyWidget from "../components/CalendlyWidget";
 
 const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -115,39 +117,39 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <Link to="/">
+              <a href="/">
                 <img src="/photos/glomespaceB.svg" width={200} />
-              </Link>
+              </a>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link
+              <a
                 href="#features"
                 className="text-gray-700 hover:text-blue-900 transition"
               >
                 Features
-              </Link>
-              <Link
+              </a>
+              <a
                 href="#how-it-works"
                 className="text-gray-700 hover:text-blue-900 transition"
               >
                 How It Works
-              </Link>
+              </a>
               <Link to="/become-an-investor" className="hover:underline">
                 Become an Angel Investor
               </Link>
 
-              <Link
+              <a
                 href="#waitlist"
                 className="bg-blue-900 text-white px-6 py-2 rounded-full hover:bg-blue-800 transition"
               >
                 Join Waitlist
-              </Link>
+              </a>
 
-              <Link to={"https://www.linkedin.com/company/glomespace/"}>
+              <a target="_blank" href={"https://www.linkedin.com/company/glomespace/"}>
                 <FaLinkedin size={30} className="text-blue-900" />
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -168,30 +170,27 @@ const Home = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t">
             <div className="px-4 py-4 space-y-3">
-              <Link
+              <a
                 href="#features"
                 className="block text-gray-700 hover:text-blue-900"
               >
                 Features
-              </Link>
-              <Link
+              </a>
+              <a
                 href="#how-it-works"
                 className="block text-gray-700 hover:text-blue-900"
               >
                 How It Works
-              </Link>
-              <Link
-                to="/become-an-investor"
-                className="block text-gray-700 hover:text-blue-900"
-              >
+              </a>
+               <Link to="/become-an-investor" className="hover:underline">
                 Become an Angel Investor
               </Link>
-              <Link
+              <a
                 href="#waitlist"
                 className="block bg-blue-900 text-white px-6 py-2 rounded-full text-center"
               >
                 Join Waitlist
-              </Link>
+              </a>
             </div>
           </div>
         )}
@@ -211,18 +210,18 @@ const Home = () => {
                 traditional logistics providers.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link
+                <a
                   href="#waitlist"
                   className="bg-blue-900 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   Get Early Access
-                </Link>
-                <Link
+                </a>
+                <a
                   href="#how-it-works"
                   className="bg-white text-blue-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-slate-100 transition border-2 border-blue-900"
                 >
                   Learn More
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -445,19 +444,29 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Calendry */}
+
+      
+
+           <div className="w-full h-max ">
+          <CalendlyWidget />
+          </div>
+
+
+
       {/* Footer */}
       <footer className="bg-slate-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-2">
-            <Link to="/">
+            <a href="/">
               <img src="/photos/glomespaceB.svg" width={200} />
-            </Link>
+            </a>
           </div>
           <p className="text-gray-600 mb-4">Ship faster, smarter and cheaper</p>
           <p className="text-gray-500 text-sm">
-            {" "}
             &copy; {new Date().getFullYear()} GlomeSpace, Inc and its affiliates
           </p>
+          <p>251 West 30th Street, New York, NY 10001, US</p>
         </div>
       </footer>
     </div>
