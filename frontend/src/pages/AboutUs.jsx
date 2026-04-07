@@ -80,18 +80,18 @@ export const AboutUs = () => {
         <h1 className="text-blue-900 font-bold">Contact Us</h1>
 
         <div className="flex flex-col md:flex-row   text-[14px] text-gray-600 gap-4 items-start justify-start">
-          <div className="flex flex-row md:flex-col items-center gap-2">
+          {/** <div className="flex flex-row md:flex-col items-center gap-2">
             <PhoneCall size={20} />
             <div>
               <p>+1 (123) 456-7890</p>
               <p>+1 (123) 456-7890</p>
             </div>
-          </div>
+          </div>**/}
           <div className="flex flex-row md:flex-col items-center gap-2">
             <MdEmail size={20} />
             <div>
               <p>admin@glomespace.com</p>
-              <p>support@glomespace.com</p>
+              <p>arihoseth@glomespace.com</p>
             </div>
           </div>
 
