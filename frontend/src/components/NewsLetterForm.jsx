@@ -30,3 +30,34 @@ export const NewsletterForm = () => {
     </div>
   );
 };
+
+export const ThinNewsletterForm = () => {
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    // 1. Safety Check: If the div already has content, don't add it again
+    if (!formRef.current || formRef.current.innerHTML !== "") return;
+
+    const script = document.createElement("script");
+    script.src = "https://glomespace.kit.com/6c457d1532/index.js";
+    script.async = true;
+    script.setAttribute("data-uid", "6c457d1532");
+
+    formRef.current.appendChild(script);
+
+    // 2. The Cleanup is CRITICAL
+    return () => {
+      if (formRef.current) {
+        formRef.current.innerHTML = ""; // This wipes the form when you leave the page
+      }
+      // Optional: Remove the script tag from the DOM entirely
+      script.remove();
+    };
+  }, []);
+
+  return (
+    <div ref={formRef} id="kit-thin-form-stripe" className="w-full">
+      {/* Form injects here */}
+    </div>
+  );
+};

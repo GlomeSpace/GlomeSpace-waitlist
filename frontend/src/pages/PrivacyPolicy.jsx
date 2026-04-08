@@ -199,7 +199,7 @@ In order to facilitate the offer of Insurance on or through the GlomeSpace Platf
   `;
 
   return (
-    <div className="font-Roboto w-full md:ml-10 md:w-6/10">
+    <div className="font-Roboto w-full mt-20 md:mt-0 md:ml-10 md:w-6/10">
       <MarkdownPreview source={PrivacyPolicyMarkDown} style={{ padding: 16 }} />
     </div>
   );
