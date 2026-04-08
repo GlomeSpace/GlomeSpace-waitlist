@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "react-router-dom";
-import { NewsletterForm, ThinNewsletterForm } from "./NewsLetterForm";
-import { useFetch } from "../../../glomespace_blogs/src/hooks/useFetch";
+import { NewsletterForm } from "./NewsLetterForm";
+import { useFetch } from "../hooks/useFetch";
 import { UseDataFetcher } from "../hooks/UseDataFetcher";
 import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,7 +11,7 @@ export const ReadBlogComponent = () => {
   const STRAPI_API_URL = import.meta.env.VITE_STRAPI_API_URL;
   const { documentId } = useParams();
   const { formatTimestamp } = UseDataFetcher();
-  console.log("Document ID from URL:", documentId); // Debugging log
+
   const { loading, error, data } = useFetch(`${STRAPI_API_URL}/api/blogs`);
 
   // 1. Check loading state FIRST
@@ -26,8 +26,9 @@ export const ReadBlogComponent = () => {
     );
 
   // 3. Now find the blog
-  const blog = data?.find((b) => b.documentId === documentId);
-  console.log("Found blog:", blog.documentId); // Debugging log
+  const blog = data?.data
+    ? data.data.find((b) => b.documentId === documentId)
+    : data.find((b) => b.documentId === documentId);
 
   // 4. ONLY IF loading is done and data is here, check if blog exists
   if (!blog) {
@@ -35,11 +36,11 @@ export const ReadBlogComponent = () => {
   }
   return (
     <div>
-      <section className="mt-20 md:mt-0 bg-blue-100  ">
+      <section className="mt-12  md:mt-0 bg-blue-100  ">
         <div className="">
           <div className="flex flex-col-reverse md:flex-row w-full md:gap-2 items-center">
-            <div className="px-8 w-full gap-5 md:w-7/10  lg:text-left">
-              <h1 className="text-[20px] md:text-4xl sm:text-5xl lg:text-4xl font-bold text-blue-900 ">
+            <div className="flex flex-col px-4 md:py-20 w-full  md:w-7/10  lg:text-left">
+              <h1 className="text-[20px] text-center md:text-4xl sm:text-5xl lg:text-4xl font-bold text-blue-900 ">
                 {blog.Title}
               </h1>
 
@@ -51,7 +52,7 @@ export const ReadBlogComponent = () => {
                 Written by {blog.author} on {formatTimestamp(blog.publishedAt)}
               </p>
 
-              <div className=" flex items-center gap-3 md:mt-10   text-gray-700 ">
+              <div className=" flex items-center gap-3 md:mt-10  mb-5 md:mb-0  text-gray-700 ">
                 <p className="font-fancyFontAgain text-black font md:text-[20px]">
                   Share post on
                 </p>
