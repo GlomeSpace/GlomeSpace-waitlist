@@ -189,7 +189,7 @@ After package check in, you are supposed to discuss with your deliverer on the a
 
 `;
   return (
-    <div className="font-Roboto text-[10px] md:ml-10 w-full md:w-6/10">
+    <div className="font-Roboto text-[10px] mt-20 md:mt-0 md:ml-10 w-full md:w-6/10">
       <MarkdownPreview source={TermsOfContract} style={{ padding: 16 }} />
     </div>
   );

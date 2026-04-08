@@ -14,6 +14,10 @@ import {
 } from "@/components/ui/popover";
 import { MyAccountDialog } from "./MyAccount";
 
+import { TbBrandBlogger } from "react-icons/tb";
+import { FaBloggerB } from "react-icons/fa";
+import { IoAirplaneSharp } from "react-icons/io5";
+
 const Header = () => {
   const GLOMESPACE_APP_URL = import.meta.env.VITE_GLOMESPACE_APP_URL;
   return (
@@ -56,7 +60,7 @@ const Header = () => {
                   : "flex flex-col items-center hover:text-gray-700"
               }
             >
-              <UserRoundSearch size={20} />
+              <IoAirplaneSharp size={25} />
               Travelers
             </NavLink>
             <NavLink
@@ -67,7 +71,7 @@ const Header = () => {
                   : "flex flex-col items-center hover:text-gray-700"
               }
             >
-              <TbLayoutDashboardFilled size={20} />
+              <MessageCircleHeart size={20} />
 
               <p className="/blog-posts"> About Us </p>
             </NavLink>
@@ -79,7 +83,7 @@ const Header = () => {
                   : "flex flex-col items-center  hover:text-gray-700"
               }
             >
-              <MessageCircleHeart size={20} />
+              <FaBloggerB size={20} />
               Our Blog
             </NavLink>
           </div>

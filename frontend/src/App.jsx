@@ -10,6 +10,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import { AboutUs } from "./pages/AboutUs.jsx";
 import { BlogPosts } from "./pages/OurBlogs.jsx";
+import { ReadBlogComponent } from "./components/ReadBlogComponent.jsx";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route path="/become-an-investor" element={<InvestorForm />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/blog-posts" element={<BlogPosts />} />
+          <Route
+            path="/read-blog/:documentId"
+            element={<ReadBlogComponent />}
+          />
           <Route path="/legal/terms-of-service" element={<TermsOfService />} />
           <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />
         </Route>

@@ -17,6 +17,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { TbBrandBlogger } from "react-icons/tb";
+import { FaBloggerB } from "react-icons/fa";
+import { IoAirplaneSharp } from "react-icons/io5";
+import { IoAirplaneOutline } from "react-icons/io5";
 
 const Footer = () => {
   const location = useLocation();
@@ -50,7 +54,7 @@ const Footer = () => {
     };
   }, [lastScrollY]);
   return (
-    <div>
+    <div className="">
       {!isSpecificChatOpen && (
         <div
           className={`fixed bottom-0 left-0 right-0 z-50 md:hidden flex bg-slate-100 h-20 transition-transform duration-300 ease-in-out ${
@@ -61,9 +65,9 @@ const Footer = () => {
         </div>
       )}
 
-      <div className="hidden md:flex flex-col h-180 w-full mt-5 font-headerFont ">
+      <div className=" md:flex flex-col h-180 w-full mt-5  font-headerFont ">
         <div className="flex h-2/10 bg-slate-100">
-          <div className="flex justify-center items-center w-4/10 gap-5 ">
+          <div className="flex justify-center items-center w-full md:w-4/10 gap-5 ">
             <Link to="/legal/terms-of-service">
               <p className="text-sm">Terms of Service</p>
             </Link>
@@ -76,15 +80,17 @@ const Footer = () => {
               <p className="text-sm">Cookie Policy</p>
             </Link>
 
-            <Link to="">
+            {/**
+             * 
+             * <Link to="">
               <p className="text-sm">Settings</p>
             </Link>
             <Link to="">
               <p className="text-sm">Account</p>
-            </Link>
+            </Link> **/}
           </div>
 
-          <div className="flex justify-center items-center w-3/10 gap-10 ">
+          <div className="hidden md:flex justify-center items-center w-3/10 gap-10 ">
             <a
               href="https://www.linkedin.com/company/glomespace/"
               target="_blank"
@@ -109,7 +115,7 @@ const Footer = () => {
             </Link>
           </div>
 
-          <div className="flex justify-center items-center w-3/10 gap-5 ">
+          <div className="hidden md:flex justify-center items-center w-3/10 gap-5 ">
             <Link to="">
               <p className="text-sm">Currency</p>
             </Link>
@@ -128,18 +134,18 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex justify-center h-8/10 bg-slate-200">
-          <div className=" flex justify-between w-8/10 ">
-            <div className="flex flex-col pl-5 justify-center gap-2 w-3/10">
-              <h2 className="font-semi-bold">GlomeSpace</h2>
+          <div className=" flex justify-between w-full px-3 md:w-8/10 ">
+            <div className="flex flex-col md:pl-5 justify-center gap-2 w-3/10">
+              <h2 className="font-bold">GlomeSpace</h2>
               <Link to="">
                 <p className="text-sm">Careers</p>
               </Link>
 
-              <Link to="">
+              <Link to="/blog-posts">
                 <p className="text-sm">Newsletter</p>
               </Link>
 
-              <Link to="">
+              <Link to="/blog-posts">
                 <p className="text-sm">Blogs</p>
               </Link>
 
@@ -154,8 +160,8 @@ const Footer = () => {
 
             {/** Middle div */}
 
-            <div className="flex flex-col pl-5 justify-center gap-5 w-3/10">
-              <h2 className="font-semi-bold">Services</h2>
+            <div className="flex flex-col md:pl-5 justify-center gap-2 md:gap-5 w-3/10">
+              <h2 className="font-bold">Services</h2>
               <Link to="">
                 <p className="text-sm">Become a Deliverer</p>
               </Link>
@@ -183,8 +189,8 @@ const Footer = () => {
 
             {/** Right most div */}
 
-            <div className="flex flex-col pl-5 justify-center gap-5 w-3/10">
-              <h2 className="font-semi-bold">Support</h2>
+            <div className="flex flex-col md:pl-5 justify-center gap-2 md:gap-5 w-3/10">
+              <h2 className="font-bold">Support</h2>
               <Link to="">
                 <p className="text-sm">Help Center</p>
               </Link>
@@ -203,7 +209,7 @@ const Footer = () => {
 
               <p className="text-sm">Report a Problem</p>
 
-              <Link to="">
+              <Link to="/about-us">
                 <p className="text-sm">Frequently Asked Questions (FAQs)</p>
               </Link>
 
@@ -214,7 +220,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col text-[12px] py-10  items-center justify-center bg-slate-300 w-full h-1/10">
+        <div className="flex flex-col text-[12px] py-10 gap-1  items-center justify-center bg-slate-300 w-full h-1/10 pb-30">
           <p className="text-gray-600">Ship faster, smarter and cheaper</p>
 
           <p className="text-[12px] text-blue-900">
@@ -264,7 +270,12 @@ export const MobileFooter = () => {
         }`}
         onClick={() => handleOnClickEvent("traveler")}
       >
-        <UserRoundSearch size={20} />
+        {activePage === "traveler" ? (
+          <IoAirplaneSharp size={20} />
+        ) : (
+          <IoAirplaneOutline size={20} />
+        )}
+
         <p> Traveler </p>
       </div>
       <div
@@ -284,9 +295,9 @@ export const MobileFooter = () => {
         onClick={() => handleOnClickEvent("blog-posts")}
       >
         {activePage === "blog-posts" ? (
-          <TbLayoutDashboardFilled size={20} />
+          <FaBloggerB size={20} />
         ) : (
-          <TbLayoutDashboard size={20} />
+          <TbBrandBlogger size={20} />
         )}
 
         <p className="text-[10px]"> Blog </p>

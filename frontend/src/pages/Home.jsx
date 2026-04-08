@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import CalendlyWidget from "../components/CalendlyWidget";
 import Footer from "../components/Footer";
 import { ShipmentComponent } from "../components/ShipmentComponent";
+import { CirclePlus } from "lucide-react";
 
 const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,6 +31,52 @@ const Home = () => {
     message: "",
     newsletter: false,
   };
+
+  const [showAnswer, setShowAnswer] = useState(null);
+  const questions = [
+    {
+      index: 1,
+      question: "How do I know my item is safe with a traveler?",
+      answer:
+        "We verify travelers through ID checks and platform ratings. Additionally, we recommend using our secure payment system, where funds are held in escrow until you confirm the safe delivery of your item.",
+    },
+    {
+      index: 2,
+      question: "What items am I prohibited from sending?",
+      answer:
+        "To ensure safety and legal compliance, we strictly prohibit illegal substances, hazardous materials, weapons, and any items restricted by the customs of the destination country.",
+    },
+    {
+      index: 3,
+      question: "How is the shipping price determined?",
+      answer:
+        "Pricing is decentralized. You can either set a 'bounty' you are willing to pay, or travelers can send you offers based on the size, weight, and urgency of your shipment.",
+    },
+    {
+      index: 4,
+      question: "Can I track my shipment in real-time?",
+      answer:
+        "Yes. Once a traveler accepts your shipment, you can communicate directly through our in-app chat, and travelers are encouraged to provide status updates and photos at key milestones (pickup, transit, arrival).",
+    },
+    {
+      index: 5,
+      question: "What happens if my item is damaged or lost?",
+      answer:
+        "While travelers are vetted, we advise owners to declare the value of their items. In the rare event of a dispute, our support team mediates using the evidence provided in the app. We also offer optional GlomeSpace Protection for high-value items.",
+    },
+    {
+      index: 6,
+      question: "Do I have to pay customs duties?",
+      answer:
+        "Customs duties are generally the responsibility of the Shipment Owner. We recommend discussing potential duties with your traveler beforehand and providing all necessary documentation for a smooth border crossing.",
+    },
+    {
+      index: 7,
+      question: "How do I choose the right traveler?",
+      answer:
+        "You can view a traveler’s profile, which includes their verification status, past delivery history, and reviews from other shipment owners. Choose the one that best fits your timeline and budget.",
+    },
+  ];
 
   const [userData, setUserData] = useState(INITIAL_STATE);
 
@@ -278,6 +325,47 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <div>
+        <h1 className="text-blue-900 font-bold text-center mt-20">
+          Frequently Asked Questions (FAQs) by Shipment Owners
+        </h1>
+        <div className="flex flex-col md:flex-row max-w-7xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
+          <div className="md:w-4/10">
+            <img
+              src="/photos/questions2.png"
+              alt="FAQs"
+              className="w-full h-auto object-cover"
+            />
+          </div>
+
+          <div className="md:w-6/10">
+            {questions.map((q) => (
+              <div
+                key={q.index}
+                className="mb-6 shadow-md p-4 rounded-lg bg-slate-50 border-gray-200"
+              >
+                <div className="flex justify-between ">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {q.question}
+                  </h3>
+                  <button
+                    onClick={() =>
+                      setShowAnswer(showAnswer === q.index ? null : q.index)
+                    }
+                  >
+                    <CirclePlus />
+                  </button>
+                </div>
+
+                {showAnswer === q.index && (
+                  <p className="text-gray-600 mt-2">{q.answer}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Waitlist Section */}
       <section
