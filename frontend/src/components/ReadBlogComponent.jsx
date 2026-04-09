@@ -122,6 +122,18 @@ export const ReadBlogComponent = () => {
 const BlogContent = ({ blocks }) => {
   if (!blocks) return null;
 
+  // Helper function to render text with formatting (bold, italic)
+  const renderChildren = (children) => {
+    return children.map((child, i) => (
+      <span
+        key={i}
+        className={`${child.bold ? "font-bold" : ""} ${child.italic ? "italic" : ""}`}
+      >
+        {child.text}
+      </span>
+    ));
+  };
+
   return blocks.map((block, index) => {
     // 1. Handle Paragraphs
     if (block.type === "paragraph") {
@@ -130,16 +142,14 @@ const BlogContent = ({ blocks }) => {
           key={index}
           className="mb-6 md:mb-10 text-gray-800 leading-relaxed md:text-justify"
         >
-          {block.children.map((child, i) => child.text).join("")}
+          {renderChildren(block.children)}
         </p>
       );
     }
 
-    // 2. Handle Headings (h1 through h6)
+    // 2. Handle Headings
     if (block.type === "heading") {
-      const Tag = `h${block.level}`; // Dynamically creates h1, h2, etc.
-
-      // Define styles based on the heading level
+      const Tag = `h${block.level}`;
       const headingStyles = {
         h1: "text-4xl font-bold mt-12 mb-6 text-blue-900",
         h2: "text-3xl font-bold mt-10 mb-5 text-blue-900",
@@ -148,26 +158,43 @@ const BlogContent = ({ blocks }) => {
         h5: "text-lg font-bold mt-4 mb-2 text-blue-800",
         h6: "text-base font-bold mt-4 mb-2 text-blue-800",
       };
-
       return (
         <Tag key={index} className={headingStyles[Tag] || headingStyles.h2}>
-          {block.children.map((child) => child.text).join("")}
+          {renderChildren(block.children)}
         </Tag>
       );
     }
 
-    // 3. Handle Lists (Optional but highly recommended for blogs)
+    // 3. Handle Lists (Updated for Ordered/Numbered support)
     if (block.type === "list") {
-      const ListTag = block.format === "ordered" ? "ol" : "ul";
+      const isOrdered = block.format === "ordered";
+      const ListTag = isOrdered ? "ol" : "ul";
+
       return (
         <ListTag
           key={index}
-          className="list-inside list-disc mb-6 ml-4 space-y-2"
+          className={`mb-8 ml-6 space-y-4 text-gray-800 ${
+            isOrdered ? "list-decimal" : "list-disc"
+          }`}
         >
           {block.children.map((item, i) => (
-            <li key={i}>{item.children.map((c) => c.text).join("")}</li>
+            <li key={i} className="pl-2 leading-relaxed">
+              {renderChildren(item.children)}
+            </li>
           ))}
         </ListTag>
+      );
+    }
+
+    // 4. Handle Quotes
+    if (block.type === "quote") {
+      return (
+        <blockquote
+          key={index}
+          className="my-8 pl-6 border-l-4 border-blue-500 italic text-xl text-gray-700 bg-blue-50 py-4 pr-4 rounded-r-lg"
+        >
+          {renderChildren(block.children)}
+        </blockquote>
       );
     }
 
