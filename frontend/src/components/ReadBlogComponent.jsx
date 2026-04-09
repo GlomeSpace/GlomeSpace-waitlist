@@ -88,7 +88,7 @@ export const ReadBlogComponent = () => {
             <div className="relative flex flex-col items-center justify-center gap-5 h-80 md:h-100 w-full md:w-6/10">
               <div className="w-full md:h-9/10  absolute md:top-5 md:left-10 ">
                 <img
-                  src={blog.thumbnail || "/photos/travelers.jpeg"}
+                  src={blog.thumbnail || "/photos/glomespace_thumnbail.png"}
                   alt={blog.Title}
                   className="w-full h-full object-cover rounded-md md:mb-4"
                 />
@@ -120,16 +120,57 @@ export const ReadBlogComponent = () => {
 };
 
 const BlogContent = ({ blocks }) => {
+  if (!blocks) return null;
+
   return blocks.map((block, index) => {
-    // Check the block type (paragraph, heading, list, etc.)
+    // 1. Handle Paragraphs
     if (block.type === "paragraph") {
       return (
-        <p key={index} className="md:mb-10  md:text-justify">
-          {block.children.map((child) => child.text).join("")}
+        <p
+          key={index}
+          className="mb-6 md:mb-10 text-gray-800 leading-relaxed md:text-justify"
+        >
+          {block.children.map((child, i) => child.text).join("")}
         </p>
       );
     }
-    // Add more types as needed (heading, image, etc.)
+
+    // 2. Handle Headings (h1 through h6)
+    if (block.type === "heading") {
+      const Tag = `h${block.level}`; // Dynamically creates h1, h2, etc.
+
+      // Define styles based on the heading level
+      const headingStyles = {
+        h1: "text-4xl font-bold mt-12 mb-6 text-blue-900",
+        h2: "text-3xl font-bold mt-10 mb-5 text-blue-900",
+        h3: "text-2xl font-semibold mt-8 mb-4 text-blue-800",
+        h4: "text-xl font-semibold mt-6 mb-3 text-blue-800",
+        h5: "text-lg font-bold mt-4 mb-2 text-blue-800",
+        h6: "text-base font-bold mt-4 mb-2 text-blue-800",
+      };
+
+      return (
+        <Tag key={index} className={headingStyles[Tag] || headingStyles.h2}>
+          {block.children.map((child) => child.text).join("")}
+        </Tag>
+      );
+    }
+
+    // 3. Handle Lists (Optional but highly recommended for blogs)
+    if (block.type === "list") {
+      const ListTag = block.format === "ordered" ? "ol" : "ul";
+      return (
+        <ListTag
+          key={index}
+          className="list-inside list-disc mb-6 ml-4 space-y-2"
+        >
+          {block.children.map((item, i) => (
+            <li key={i}>{item.children.map((c) => c.text).join("")}</li>
+          ))}
+        </ListTag>
+      );
+    }
+
     return null;
   });
 };

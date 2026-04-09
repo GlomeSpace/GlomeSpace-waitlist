@@ -6,10 +6,17 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { FlightDetailsComponent } from "../components/FlightDetailsComponent";
-import { BlogComponent } from "../components/BlogComponent";
+import {
+  BlogComponent,
+  BlogComponentSkeleton,
+} from "../components/BlogComponent";
+import { useFetch } from "../hooks/useFetch";
 
 export const BlogPosts = () => {
   const GLOMESPACE_APP_URL = import.meta.env.VITE_GLOMESPACE_APP_URL;
+  const STRAPI_API_URL = import.meta.env.VITE_STRAPI_API_URL;
+
+  const { loading, error, data } = useFetch(`${STRAPI_API_URL}/api/blogs`);
 
   return (
     <div className="min-h-screen font-headerFont bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100">
@@ -59,7 +66,18 @@ export const BlogPosts = () => {
       <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
-            <BlogComponent />
+            {loading ? (
+              <>
+                <BlogComponentSkeleton />
+                <BlogComponentSkeleton />
+                <BlogComponentSkeleton />
+                <BlogComponentSkeleton />
+                <BlogComponentSkeleton />
+                <BlogComponentSkeleton />
+              </>
+            ) : (
+              <BlogComponent data={data} />
+            )}
           </div>
         </div>
       </section>
