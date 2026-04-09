@@ -89,7 +89,7 @@ export const BlogPostEmbeddable = () => {
     `${STRAPI_API_URL}/api/blogs?pagination[limit]=3&sort[0]=createdAt:desc`,
   );
   return (
-    <div className="flex flex-col h-140 px-10 w-full">
+    <div className="flex flex-col h-140 px-3 md:px-10 w-full">
       <div className="flex flex-col items-center justify-center h-2/10 ">
         <h3 className="font-bold text-[20px]">Get insipired</h3>
         <p className="text-gray-500 uppercase tracking-widest text-[12px] font-medium">
