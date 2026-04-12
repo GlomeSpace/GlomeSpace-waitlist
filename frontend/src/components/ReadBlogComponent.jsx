@@ -6,13 +6,17 @@ import { UseDataFetcher } from "../hooks/UseDataFetcher";
 import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
+import { TrustpilotReviewCard } from "./TrustpilotReviewCard";
+import { Link2 } from "lucide-react";
 
 export const ReadBlogComponent = () => {
   const STRAPI_API_URL = import.meta.env.VITE_STRAPI_API_URL;
   const { documentId } = useParams();
   const { formatTimestamp } = UseDataFetcher();
 
-  const { loading, error, data } = useFetch(`${STRAPI_API_URL}/api/blogs`);
+  const { loading, error, data } = useFetch(
+    `${STRAPI_API_URL}/api/blogs?populate=*`,
+  );
 
   // 1. Check loading state FIRST
   if (loading) return <div className="pt-20 text-center">Loading blog...</div>;
@@ -81,6 +85,10 @@ export const ReadBlogComponent = () => {
                   <FaLinkedin size={25} />
                 </a>
 
+                <a>
+                  <Link2 />
+                </a>
+
                 {/* Add more social platforms as needed */}
               </div>
             </div>
@@ -88,7 +96,7 @@ export const ReadBlogComponent = () => {
             <div className="relative flex flex-col items-center justify-center gap-5 h-80 md:h-100 w-full md:w-6/10">
               <div className="w-full md:h-9/10  absolute md:top-5 md:left-10 ">
                 <img
-                  src={blog.thumbnail || "/photos/travelers.jpeg"}
+                  src={blog.thumbnail.url || "/photos/glomespace_thumnbail.png"}
                   alt={blog.Title}
                   className="w-full h-full object-cover rounded-md md:mb-4"
                 />
@@ -115,21 +123,90 @@ export const ReadBlogComponent = () => {
           <NewsletterForm />
         </div>
       </section>
+      <TrustpilotReviewCard />
     </div>
   );
 };
 
 const BlogContent = ({ blocks }) => {
+  if (!blocks) return null;
+
+  // Helper function to render text with formatting (bold, italic)
+  const renderChildren = (children) => {
+    return children.map((child, i) => (
+      <span
+        key={i}
+        className={`${child.bold ? "font-bold" : ""} ${child.italic ? "italic" : ""}`}
+      >
+        {child.text}
+      </span>
+    ));
+  };
+
   return blocks.map((block, index) => {
-    // Check the block type (paragraph, heading, list, etc.)
+    // 1. Handle Paragraphs
     if (block.type === "paragraph") {
       return (
-        <p key={index} className="md:mb-10  md:text-justify">
-          {block.children.map((child) => child.text).join("")}
+        <p
+          key={index}
+          className="mb-6 md:mb-10 text-gray-800 leading-relaxed md:text-justify"
+        >
+          {renderChildren(block.children)}
         </p>
       );
     }
-    // Add more types as needed (heading, image, etc.)
+
+    // 2. Handle Headings
+    if (block.type === "heading") {
+      const Tag = `h${block.level}`;
+      const headingStyles = {
+        h1: "text-4xl font-bold mt-12 mb-6 text-blue-900",
+        h2: "text-3xl font-bold mt-10 mb-5 text-blue-900",
+        h3: "text-2xl font-semibold mt-8 mb-4 text-blue-800",
+        h4: "text-xl font-semibold mt-6 mb-3 text-blue-800",
+        h5: "text-lg font-bold mt-4 mb-2 text-blue-800",
+        h6: "text-base font-bold mt-4 mb-2 text-blue-800",
+      };
+      return (
+        <Tag key={index} className={headingStyles[Tag] || headingStyles.h2}>
+          {renderChildren(block.children)}
+        </Tag>
+      );
+    }
+
+    // 3. Handle Lists (Updated for Ordered/Numbered support)
+    if (block.type === "list") {
+      const isOrdered = block.format === "ordered";
+      const ListTag = isOrdered ? "ol" : "ul";
+
+      return (
+        <ListTag
+          key={index}
+          className={`mb-8 ml-6 space-y-4 text-gray-800 ${
+            isOrdered ? "list-decimal" : "list-disc"
+          }`}
+        >
+          {block.children.map((item, i) => (
+            <li key={i} className="pl-2 leading-relaxed">
+              {renderChildren(item.children)}
+            </li>
+          ))}
+        </ListTag>
+      );
+    }
+
+    // 4. Handle Quotes
+    if (block.type === "quote") {
+      return (
+        <blockquote
+          key={index}
+          className="my-8 pl-6 border-l-4 border-blue-500 italic text-xl text-gray-700 bg-blue-50 py-4 pr-4 rounded-r-lg"
+        >
+          {renderChildren(block.children)}
+        </blockquote>
+      );
+    }
+
     return null;
   });
 };
