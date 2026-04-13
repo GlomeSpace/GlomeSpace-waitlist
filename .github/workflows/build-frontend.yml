@@ -110,19 +110,20 @@ jobs:
       - name: Build All Services (no push)
         run: docker compose build
         env:
-          # Dummy env vars so compose doesn't complain about missing variables
-          DATABASE_NAME: ci_db
-          DATABASE_USERNAME: ci_user
-          DATABASE_PASSWORD: ci_password
-          DATABASE_CLIENT: postgres
-          DATABASE_PORT: 5432
-          DATABASE_SSL: "false"
-          APP_KEYS: "ci-key-1,ci-key-2,ci-key-3,ci-key-4"
-          API_TOKEN_SALT: ci-api-token-salt
-          ADMIN_JWT_SECRET: ci-admin-jwt-secret
-          TRANSFER_TOKEN_SALT: ci-transfer-token-salt
-          ENCRYPTION_KEY: ci-encryption-key
-          JWT_SECRET: ci-jwt-secret
+            # Dummy env vars so compose doesn't complain about missing variables
+            DOCKERHUB_USERNAME: dummy-value
+            DATABASE_NAME: ci_db
+            DATABASE_USERNAME: ci_user
+            DATABASE_PASSWORD: ci_password
+            DATABASE_CLIENT: postgres
+            DATABASE_PORT: 5432
+            DATABASE_SSL: "false"
+            APP_KEYS: "ci-key-1,ci-key-2,ci-key-3,ci-key-4"
+            API_TOKEN_SALT: ci-api-token-salt
+            ADMIN_JWT_SECRET: ci-admin-jwt-secret
+            TRANSFER_TOKEN_SALT: ci-transfer-token-salt
+            ENCRYPTION_KEY: ci-encryption-key
+            JWT_SECRET: ci-jwt-secret
 
   # JOB 4 — CI Summary (always runs, gives a clear pass/fail)
 
