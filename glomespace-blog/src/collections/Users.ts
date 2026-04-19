@@ -31,6 +31,14 @@ export const Users: CollectionConfig = {
       required: true,
     },
     {
+  name: 'title',
+  type: 'text',
+  required: false,
+  admin: {
+    description: 'e.g. Founder, CEO, COO, Lead Developer',
+  },
+},
+    {
       name: 'role',
       type: 'select',
       options: ['admin', 'author', 'reader'],

@@ -128,6 +128,10 @@ export interface User {
   username: string;
   firstName: string;
   lastName: string;
+  /**
+   * e.g. Founder, CEO, COO, Lead Developer
+   */
+  title?: string | null;
   role: 'admin' | 'author' | 'reader';
   avatar?: (number | null) | Media;
   bio?: string | null;
@@ -295,6 +299,7 @@ export interface UsersSelect<T extends boolean = true> {
   username?: T;
   firstName?: T;
   lastName?: T;
+  title?: T;
   role?: T;
   avatar?: T;
   bio?: T;
