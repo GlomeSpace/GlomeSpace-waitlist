@@ -2,6 +2,11 @@ import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+   access: {
+    read: () => true, // ✅ public read so images load on frontend
+    create: ({ req }) => !!req.user,
+    delete: ({ req }) => req.user?.role === 'admin',
+  },
   upload: {
     staticDir: 'media',
     mimeTypes: [
