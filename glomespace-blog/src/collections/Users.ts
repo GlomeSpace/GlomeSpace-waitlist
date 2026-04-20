@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   access: {
-    read: ({ req }) => !!req.user,
+    read: () => true, 
     update: ({ req, id }) =>
       req.user?.role === 'admin' || req.user?.id === id,
     delete: ({ req }) => req.user?.role === 'admin',
