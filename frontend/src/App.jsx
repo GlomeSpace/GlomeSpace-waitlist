@@ -22,10 +22,7 @@ function App() {
           <Route path="/become-an-investor" element={<InvestorForm />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/blog-posts" element={<BlogPosts />} />
-          <Route
-            path="/read-blog/:documentId"
-            element={<ReadBlogComponent />}
-          />
+          <Route path="/read-blog/:slug" element={<ReadBlogComponent />} />
           <Route path="/legal/terms-of-service" element={<TermsOfService />} />
           <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />
         </Route>
