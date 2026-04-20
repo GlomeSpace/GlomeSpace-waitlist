@@ -10,12 +10,12 @@ import { TrustpilotReviewCard } from "./TrustpilotReviewCard";
 import { Link2 } from "lucide-react";
 
 export const ReadBlogComponent = () => {
-  const STRAPI_API_URL = import.meta.env.VITE_STRAPI_API_URL;
-  const { documentId } = useParams();
+  const PAYLOAD_API_URL = import.meta.env.VITE_PAYLOAD_API_URL;
+  const { slug } = useParams();
   const { formatTimestamp } = UseDataFetcher();
 
   const { loading, error, data } = useFetch(
-    `${STRAPI_API_URL}/api/blogs?populate=*`,
+    `${PAYLOAD_API_URL}/api/blogs?where[slug][equals]=${slug}&depth=2`,
   );
 
   // 1. Check loading state FIRST
@@ -28,12 +28,7 @@ export const ReadBlogComponent = () => {
         Error: {error.message}
       </div>
     );
-
-  // 3. Now find the blog
-  const blog = data?.data
-    ? data.data.find((b) => b.documentId === documentId)
-    : data.find((b) => b.documentId === documentId);
-
+  const blog = data.docs[0];
   // 4. ONLY IF loading is done and data is here, check if blog exists
   if (!blog) {
     return <div className="pt-20 text-center">Blog not found!</div>;
@@ -53,7 +48,8 @@ export const ReadBlogComponent = () => {
               </p>
 
               <p className=" md:mt-10  italic text-gray-700 text-[15px]">
-                Written by {blog.author} on {formatTimestamp(blog.publishedAt)}
+                Written by {blog.author.firstName} {blog.author.lastName} on{" "}
+                {formatTimestamp(blog.publishDate)}
               </p>
 
               <div className=" flex items-center gap-3 md:mt-10  mb-5 md:mb-0  text-gray-700 ">
@@ -96,7 +92,10 @@ export const ReadBlogComponent = () => {
             <div className="relative flex flex-col items-center justify-center gap-5 h-80 md:h-100 w-full md:w-6/10">
               <div className="w-full md:h-9/10  absolute md:top-5 md:left-10 ">
                 <img
-                  src={blog.thumbnail.url || "/photos/glomespace_thumnbail.png"}
+                  src={
+                    blog.thumbnail?.sizes.thumbnail.url ||
+                    "/photos/glomespace_thumnbail.png"
+                  }
                   alt={blog.Title}
                   className="w-full h-full object-cover rounded-md md:mb-4"
                 />
@@ -111,7 +110,7 @@ export const ReadBlogComponent = () => {
         className="flex flex-col md:flex-row gap-5 py-20 px-4 sm:px-6 lg:px-8"
       >
         <div className="md:w-6/10 md:px-20">
-          <BlogContent blocks={blog.content} />
+          <BlogContent blocks={blog.content?.root?.children} />
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-4">
             <Button className="text-[13px] px-2  bg-blue-400">

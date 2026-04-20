@@ -20,6 +20,19 @@ export const BlogPost: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+  access: {
+    read: ({ req }) => {
+    if (req.user) return true 
+    return {
+      status: {
+        equals: 'published', 
+      },
+    }
+  },        
+    create: ({ req }) => !!req.user,  // only logged in users
+    update: ({ req }) => !!req.user,  // only logged in users
+    delete: ({ req }) => req.user?.role === 'admin', // only admins
+  },
   fields: [
     {
       name: 'title',
@@ -88,7 +101,7 @@ export const BlogPost: CollectionConfig = {
       name: 'thumbnail',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
     },
     {
       name: 'tags',

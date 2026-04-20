@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   access: {
-    read: ({ req }) => !!req.user,
+    read: () => true, 
     update: ({ req, id }) =>
       req.user?.role === 'admin' || req.user?.id === id,
     delete: ({ req }) => req.user?.role === 'admin',
@@ -30,6 +30,14 @@ export const Users: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+  name: 'title',
+  type: 'text',
+  required: false,
+  admin: {
+    description: 'e.g. Founder, CEO, COO, Lead Developer',
+  },
+},
     {
       name: 'role',
       type: 'select',
