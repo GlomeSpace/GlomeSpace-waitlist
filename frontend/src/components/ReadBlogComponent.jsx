@@ -93,8 +93,8 @@ export const ReadBlogComponent = () => {
               <div className="w-full md:h-9/10  absolute md:top-5 md:left-10 ">
                 <img
                   src={
-                    blog.thumbnail?.sizes?.card?.url
-                      ? `${blog.thumbnail.sizes.card.url}`
+                    blog.thumbnail.thumbnailURL
+                      ? `${blog.thumbnail.thumbnailURL}`
                       : "/photos/glomespace_thumbnail.png"
                   }
                   alt={blog.title} // ✅ lowercase 't' — JS is case sensitive

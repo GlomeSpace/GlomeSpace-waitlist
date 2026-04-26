@@ -6,22 +6,27 @@ export const BlogComponent = ({ data }) => {
   return (
     <>
       {data.docs.map((blog) => (
-        <div key={blog.id} className="bg-white rounded-lg shadow-md p-1 h-max">
+        <div
+          key={blog.id}
+          className="flex flex-col bg-white rounded-lg shadow-md p-1 h-110"
+        >
           {/* If you don't have an imageUrl in the object yet, use a placeholder or check your CMS fields */}
-          <img
-            src={
-              blog.thumbnail?.sizes?.card?.url
-                ? `${blog.thumbnail.thumbnailURL}`
-                : "/photos/glomespace_thumbnail.png"
-            }
-            alt={blog.title}
-            className="w-full h-48 object-cover rounded-md"
-          />
+          <div className="h-5/10">
+            <img
+              src={
+                blog.thumbnail.thumbnailURL
+                  ? `${blog.thumbnail.thumbnailURL}`
+                  : "/photos/glomespace_thumbnail.png"
+              }
+              alt={blog.title}
+              className="w-full h-full object-cover rounded-md"
+            />
+          </div>
 
           {/* Use blog.Title (Capital T) */}
-          <div className="p-4">
-            <h3 className="text-xl font-semibold mb-2 text-blue-900">
-              {blog.Title}
+          <div className="h-5/10 p-4">
+            <h3 className="text-[16px] font-semibold mb-2 text-blue-900">
+              {blog.title}
             </h3>
 
             <p className="line-clamp text-gray-600 mb-4 text-[13px]">
