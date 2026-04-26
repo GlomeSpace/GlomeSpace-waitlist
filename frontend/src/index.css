@@ -35,7 +35,7 @@
 
 .line-clamp {
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* Change this to the number of lines you want to show */
+  -webkit-line-clamp: 4; /* Change this to the number of lines you want to show */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
