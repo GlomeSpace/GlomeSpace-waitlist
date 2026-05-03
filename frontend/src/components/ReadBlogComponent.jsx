@@ -8,6 +8,8 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { TrustpilotReviewCard } from "./TrustpilotReviewCard";
 import { Link2 } from "lucide-react";
+import { BlogPostMiniEmbeddable, MiniBlogComponent } from "./BlogComponent";
+import { Badge } from "@/components/ui/badge";
 
 export const ReadBlogComponent = () => {
   const PAYLOAD_API_URL = import.meta.env.VITE_PAYLOAD_API_URL;
@@ -132,17 +134,20 @@ export const ReadBlogComponent = () => {
       >
         <div className="md:w-7/10 md:px-20">
           <BlogContent blocks={blog.content?.root?.children} />
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-4">
-            <Button className="text-[13px] px-2  bg-blue-400">
-              <Link to="/blog-posts">Go Back to Blogs</Link>
-            </Button>
-          </div>
         </div>
+
         <div className="md:w-3/10 md:mx-auto">
           <NewsletterForm />
         </div>
       </section>
+
+      <BlogPostMiniEmbeddable />
+      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start px-5 mt-4">
+        <Button className="text-[13px] px-2  bg-blue-400">
+          <Link to="/blog-posts">Go Back to Blogs</Link>
+        </Button>
+      </div>
+
       <TrustpilotReviewCard />
     </div>
   );
